@@ -1,24 +1,35 @@
-Google-EmailScraper
-===================
+# Google-EmailScraper
 
-This is a scraper that searches Google based on a query and scrapes all
-emails found on each page Google finds.
+Google-EmailScraper is a tool that searches Google based on a query and scrapes all emails found on each page. The output files are saved as csv.
 
-Requirements
-------------
-* Python 2.6+
+## Installation
 
-Instructions
-------------
-To use this scraper, you'll need to run main.py with Python and pass in
-the following arguments
+1. Clone the repository.
+2. Install the required Python libraries by running the following command:
 
-* -query (this is what we're telling Google to search for)
-* -pages (number of Google search results pages we should scrape)
-* -o     (output filename) 
+    pip install -r requirements.txt
 
-Example
--------
-```
-python main.py -query "adoption agency email" -pages 10 -o emails.csv
-```
+
+## Usage
+
+You can run the script using the following command:
+
+python main_serp.py -query "Your Search Query" -pages 10 -o "output.csv" -key "Your_Serp_API_Key"
+
+
+Where:
+
+- `-query` is your search query.
+- `-pages` is the number of Google results pages to scrape (default is 10).
+- `-o` is the output filename (default is 'emails.csv').
+- `-key` is your Serp API key.
+
+You can provide the Serp API key either directly as a command line argument using `-key`, or you can set it in a `.env` file with the variable name `SERP_API_KEY`. The script will automatically load the API key from the `.env` file if it's not provided in the command line.
+
+Please replace "Your Search Query", "output.csv", and "Your_Serp_API_Key" with your actual search query, desired output file name, and Serp API key respectively.
+
+Remember to create a .env file in the same directory as your script, and add your Serp API key to it like this, if you prefer not to provide it in the command line:
+
+    SERP_API_KEY=your_serp_api_key
+    
+Replace your_serp_api_key with your actual Serp API key.
