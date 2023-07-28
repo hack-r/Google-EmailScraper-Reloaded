@@ -28,9 +28,9 @@ Where:
 
 There are three optional flags for post-processing:
 
-  -P: Enable post-processing. This will convert all emails to lowercase, remove duplicates, and validate the emails.
-  -Eo: Email only output. This will only include emails in the output CSV, not the source page info.
-  -Ng: Exclude .gov emails. This will remove all .gov emails, as well as emails from sheriff, county, and federal domains.
+  - `P`: Enable post-processing. This will convert all emails to lowercase, remove duplicates, and validate the emails.
+  - `Eo`: Email only output. This will only include emails in the output CSV, not the source page info.
+  - `Ng`: Exclude .gov emails. This will remove all .gov emails, as well as emails from sheriff, county, and federal domains.
 
 You can provide the Serp API key either directly as a command line argument using `-key`, or you can set it in a `.env` file with the variable name `SERP_API_KEY`. The script will automatically load the API key from the `.env` file if it's not provided in the command line.
 
