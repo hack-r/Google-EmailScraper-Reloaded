@@ -3,7 +3,7 @@
 # Purpose: Scraper that searches Google based on a query and scrapes all emails found on each page.
 # Output files are saved as csv.
 # 
-# Author: Jason (github.com/hack-r)
+# Author: Jason
 # Date: 2023-07-27
 # 
 # This program is released under the MIT License.
@@ -11,48 +11,52 @@
 # 
 # This version uses the Serp API instead of the deprecated xGoogle library.
 
-import requests
+from serpapi import GoogleSearch
 from urllib.request import Request, urlopen
 import re, csv, os
 import argparse
 from dotenv import load_dotenv
-import os
 
 class ScrapeProcess(object):
     emails = []  # for duplication prevention
 
     def __init__(self, filename):
         self.filename  = filename
-        self.csvfile   = open(filename, 'wb+')
+        self.csvfile   = open(filename, 'w+')
         self.csvwriter = csv.writer(self.csvfile)
 
     def go(self, query, pages):
         load_dotenv()
         serp_api_key = os.getenv('SERP_API_KEY')
-        params = {
-            'q': query,
-            'num': 10,
-            'api_key': serp_api_key
-        }
 
         for i in range(pages):
-            response = requests.get('https://api.serpwow.com/live/search', params=params)
-            results = response.json().get('organic_results', [])
+            params = {
+                'q': query,
+                'num': 10,
+                'start': i * 10,
+                'api_key': serp_api_key
+            }
+            search = GoogleSearch(params)
+            results = search.get_dict().get('organic_results', [])
+            print(f'Number of results: {len(results)}')
             for page in results:
                 self.scrape(page)
             
     def scrape(self, page):
         try:
-            request = Request(page['link'].encode('utf8'))
+            request = Request(page['link'])
             html = urlopen(request).read().decode('utf8')
+            print(f'Scraping page: {page["link"]}')
         except Exception as e:
+            print(f'Could not scrape page: {page["link"]}')
             return
 
         emails = re.findall(r'([A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*)', html)
 
         for email in emails:
             if email not in self.emails:  # if not a duplicate
-                self.csvwriter.writerow([page['title'].encode('utf8'), page['link'].encode('utf8'), email])
+                print(f'Found email: {email}')
+                self.csvwriter.writerow([page['title'], page['link'], email])
                 self.emails.append(email)
 
 parser = argparse.ArgumentParser(description='Scrape Google results for emails')
