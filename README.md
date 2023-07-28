@@ -1,6 +1,6 @@
-# Google-EmailScraper
+# Google-EmailScraper-Reloaded
 
-Google-EmailScraper is a tool that searches Google based on a query and scrapes all emails found on each page. The output files are saved as csv.
+Google-EmailScraper-Reloaded is a tool that searches Google based on a query and scrapes all emails found on each page. The output files are saved as csv. Based on Google-EmailScraper for Python 2.x and xgoogle by Kenny Ledet (https://github.com/kennyledet/Google-EmailScraper).
 
 ## Installation
 
